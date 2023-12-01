@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 01-dic-2023 20:26:47 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="modelos.Articulos" table="ARTICULOS" schema="AD_PROYECTO_HIBERNATE" optimistic-lock="version">
+        <id name="codart" type="string">
+            <column name="CODART" length="20" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="familias" class="modelos.Familias" fetch="select">
+            <column name="CODFAMILIA" length="10" />
+        </many-to-one>
+        <property name="nomart" type="string">
+            <column name="NOMART" length="100" />
+        </property>
+        <property name="precio" type="big_decimal">
+            <column name="PRECIO" precision="6" />
+        </property>
+        <set name="facturases" table="FACTURAS_ARTICULOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CODART" length="20" not-null="true" />
+            </key>
+            <many-to-many entity-name="modelos.Facturas">
+                <column name="NUMFACTURA" precision="8" scale="0" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
